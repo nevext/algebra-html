@@ -1,0 +1,854 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASE 1</title>
+    <meta name="description" content="Explore and download over 50,000 high-quality icons in white and blue.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Caveat:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <!-- Pyodide for Python in the browser -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="hero-section">
+                <div class="brand-badge">
+                    <img src="https://api.iconify.design/material-symbols:layers.svg?color=%230066ff" alt="Logo"
+                        class="logo">
+                </div>
+                <h1 class="main-title">Índice de nobreza ponderado</h1>
+                <h2 class="sub-title">Álgebra Linear</h2>
+                <a href="#" id="btnCronograma" class="btn-cronograma">Cronograma</a>
+            </div>
+
+            <div class="background-icons" id="iconGrid">
+                <!-- Icons will be populated by JS -->
+            </div>
+
+            <div class="footer-credit">
+                <span>Ciência da Computação - 3º Período</span>
+            </div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>ETAPAS</h3>
+            </div>
+            <nav class="etapas-nav">
+                <ul>
+                    <li id="btnEquipe"><i data-lucide="users"></i> Equipe</li>
+                    <li id="btnEstudo"><i data-lucide="microscope"></i> Tipo de estudo de caso</li>
+                    <li id="btnContexto"><i data-lucide="info"></i> Contextualização do problema</li>
+                    <li id="btnGeral"><i data-lucide="target"></i> Objetivo geral</li>
+                    <li id="btnEspecificos"><i data-lucide="list-checks"></i> Objetivos específicos</li>
+                    <li id="btnAnalise"><i data-lucide="search"></i> Análise do caso</li>
+                    <li id="btnProposta"><i data-lucide="presentation"></i> Proposta pedagógica</li>
+                    <li id="btnCodigo"><i data-lucide="code-2"></i> Código final do estudo</li>
+                    <li id="btnConclusao"><i data-lucide="check-circle-2"></i> Conclusão</li>
+                    <li id="btnSobre"><i data-lucide="help-circle"></i> Sobre o site</li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <img src="assets/img/LOGO_CIESA_4K_REAL.svg" alt="CIESA Logo" class="sidebar-logo">
+            </div>
+        </aside>
+    </div>
+
+    <!-- Cronograma Modal -->
+    <div id="cronogramaModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Cronograma da Apresentação</h2>
+                <button id="closeCronogramaModal" class="close-btn">&times;</button>
+            </div>
+            <div class="cronograma-container">
+                <!-- Equipe -->
+                <div class="cronograma-card">
+                    <div class="card-numero">1</div>
+                    <div class="card-etapa">Equipe</div>
+                    <div class="card-responsavel">
+                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                        <p><strong>David Neves</strong><br>Apresentar a equipe</p>
+                    </div>
+                </div>
+                <!-- Tipo de Estudo -->
+                <div class="cronograma-card">
+                    <div class="card-numero">2</div>
+                    <div class="card-etapa">Tipo de Estudo de Caso</div>
+                    <div class="card-responsavel">
+                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                        <p><strong>David Neves</strong><br>Conceituação</p>
+                    </div>
+                </div>
+                <!-- Contextualização -->
+                <div class="cronograma-card">
+                    <div class="card-numero">3</div>
+                    <div class="card-etapa">Contextualização do Problema</div>
+                    <div class="card-responsavel multi">
+                        <p><strong>Toda Equipe</strong><br>Explicação conjunta</p>
+                    </div>
+                </div>
+                <!-- Objetivo Geral -->
+                <div class="cronograma-card">
+                    <div class="card-numero">4</div>
+                    <div class="card-etapa">Objetivo Geral</div>
+                    <div class="card-responsavel">
+                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                        <p><strong>David Neves</strong><br>Apresentação</p>
+                    </div>
+                </div>
+                <!-- Objetivos Específicos -->
+                <div class="cronograma-card">
+                    <div class="card-numero">5</div>
+                    <div class="card-etapa">Objetivos Específicos</div>
+                    <div class="card-responsavel multi">
+                        <p><strong>Toda Equipe</strong><br>Detalhamento dos passos</p>
+                    </div>
+                </div>
+                <!-- Análise do Caso -->
+                <div class="cronograma-card">
+                    <div class="card-numero">6</div>
+                    <div class="card-etapa">Análise do Caso</div>
+                    <div class="card-responsavel">
+                        <div class="dual-fotos">
+                            <img src="assets/img/samia_logo.png" alt="Samia Albuquerque" class="responsavel-foto">
+                            <img src="assets/img/josias_logo.png" alt="Josias Santos" class="responsavel-foto">
+                        </div>
+                        <p><strong>Samia & Josias</strong><br>Cálculos e resolução</p>
+                    </div>
+                </div>
+                <!-- Proposta Pedagógica -->
+                <div class="cronograma-card">
+                    <div class="card-numero">7</div>
+                    <div class="card-etapa">Proposta Pedagógica</div>
+                    <div class="card-responsavel">
+                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                        <p><strong>David Neves</strong><br>Contexto educacional</p>
+                    </div>
+                </div>
+                <!-- Código Final -->
+                <div class="cronograma-card">
+                    <div class="card-numero">8</div>
+                    <div class="card-etapa">Código Final do Estudo</div>
+                    <div class="card-responsavel">
+                        <div class="dual-fotos">
+                            <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                            <img src="assets/img/yara_logo.png" alt="Yara da Silva" class="responsavel-foto">
+                        </div>
+                        <p><strong>David & Yara</strong><br>Implementação Python</p>
+                    </div>
+                </div>
+                <!-- Conclusão -->
+                <div class="cronograma-card">
+                    <div class="card-numero">9</div>
+                    <div class="card-etapa">Conclusão</div>
+                    <div class="card-responsavel">
+                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                        <p><strong>David Neves</strong><br>Fechamento</p>
+                    </div>
+                </div>
+                <!-- Sobre o Site -->
+                <div class="cronograma-card">
+                    <div class="card-numero">10</div>
+                    <div class="card-etapa">Sobre o Site</div>
+                    <div class="card-responsavel">
+                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                        <p><strong>David Neves</strong><br>Tecnologia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Modal -->
+    <div id="teamModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nossa Equipe</h2>
+                <button id="closeTeamModal" class="close-btn">&times;</button>
+            </div>
+            <div class="team-grid">
+                <!-- Member 1 -->
+                <div class="team-card">
+                    <div class="avatar-placeholder">
+                        <img src="assets/img/neves_logo.png" alt="David Neves" class="member-photo">
+                    </div>
+                    <div class="member-info">
+                        <h3>David Neves</h3>
+                        <p>Gestor da equipe e responsável pela apresentação do trabalho.</p>
+                    </div>
+                </div>
+                <!-- Member 2 -->
+                <div class="team-card">
+                    <div class="avatar-placeholder">
+                        <i data-lucide="user"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3>João Pedro Leite</h3>
+                        <p>Eeer segurar o slide talvez? meh</p>
+                    </div>
+                </div>
+                <!-- Member 3 -->
+                <div class="team-card">
+                    <div class="avatar-placeholder">
+                        <img src="assets/img/josias_logo.png" alt="Josias Santos" class="member-photo">
+                    </div>
+                    <div class="member-info">
+                        <h3>Josias Santos</h3>
+                        <p>Responsável pela parte do cáculo, desafio proposto da atividade</p>
+                    </div>
+                </div>
+                <!-- Member 4 -->
+                <div class="team-card">
+                    <div class="avatar-placeholder">
+                        <img src="assets/img/samia_logo.png" alt="Samia Albuquerque" class="member-photo">
+                    </div>
+                    <div class="member-info">
+                        <h3>Samia Albuquerque</h3>
+                        <p>Responsável peo parte do cálculo, desafio proposto da atividade</p>
+                    </div>
+                </div>
+                <!-- Member 5 -->
+                <div class="team-card">
+                    <div class="avatar-placeholder">
+                        <img src="assets/img/yara_logo.png" alt="Yara da Silva" class="member-photo">
+                    </div>
+                    <div class="member-info">
+                        <h3>Yara da Silva</h3>
+                        <p>Responsável pela parte do código, desafio proposto da atividade</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Case Study Type Modal -->
+    <div id="studyModal" class="modal-overlay">
+        <div class="modal-content study-modal-content">
+            <div class="modal-header">
+                <div class="header-title">
+                    <span class="badge">Tipo: Estudo de caso quantitativo / computacional</span>
+                    <h2>Índice de Nobreza Ponderado</h2>
+                </div>
+                <button id="closeStudyModal" class="close-btn">&times;</button>
+            </div>
+            <div class="split-container">
+                <!-- Left Panel: Concept -->
+                <div class="left-panel">
+                    <div class="panel-section" data-cite="concept-what">
+                        <h3><span class="block-num">1</span> O que é</h3>
+                        <p>É uma métrica que atribui pesos <strong>w = [1, 2, 3]</strong> a categorias de produção
+                            (Básico, Luxo, Requinte) para medir o "valor relativo" de um mix. Quanto maior o peso, mais
+                            nobre a categoria.</p>
+                    </div>
+                    <div class="panel-section" data-cite="concept-why-here">
+                        <h3><span class="block-num">2</span> Por que se aplica aqui</h3>
+                        <p>O problema compara Mogno e Cerejeira com composições diferentes. A multiplicação matricial
+                            permite calcular e comparar esses índices de forma eficiente, sem cálculo manual.</p>
+                    </div>
+                    <div class="panel-section" data-cite="concept-linear-algebra">
+                        <h3><span class="block-num">3</span> Por que Álgebra Linear</h3>
+                        <p>A matriz <strong>A7</strong> organiza todos os dados de uma vez. O determinante 3×3 via
+                            cofatores (Laplace) revela se o sistema tem solução única ou dependência linear.</p>
+                    </div>
+                    <div class="panel-section" data-cite="concept-det-meaning">
+                        <h3><span class="block-num">4</span> O que o determinante indica</h3>
+                        <div class="formula-box">
+                            <p>det(A<sub>7</sub>) ≠ 0 → invertível → índices independentes</p>
+                            <p>det(A<sub>7</sub>) = 0 → singular → há dependência linear</p>
+                        </div>
+                    </div>
+                    <div class="panel-section" data-cite="concept-tools">
+                        <h3><span class="block-num">5</span> Ferramentas</h3>
+                        <ul class="tools-list">
+                            <li><i data-lucide="box"></i> Álgebra Linear (matrizes, determinantes)</li>
+                            <li><i data-lucide="terminal"></i> Python + NumPy (numpy.linalg.det)</li>
+                        </ul>
+                    </div>
+                    <div class="panel-section" data-cite="concept-goals">
+                        <h3><span class="block-num">6</span> Objetivos</h3>
+                        <ul class="goals-list">
+                            <li><i data-lucide="check-circle-2"></i> Montar a matriz A7 com índices de Mogno e Cerejeira
+                            </li>
+                            <li><i data-lucide="check-circle-2"></i> Calcular det(A7) por Laplace</li>
+                            <li><i data-lucide="check-circle-2"></i> Verificar: singular ou invertível?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Academic Statement -->
+                <div class="right-panel">
+                    <div class="exam-header">
+                        <div class="exam-institution">CENTRO DE ENSINO SUPERIOR DO AMAZONAS – CIESA</div>
+                        <div class="exam-info">
+                            <p><strong>CURSO:</strong> Ciência da Computação</p>
+                            <p><strong>DISCIPLINA:</strong> Álgebra Linear</p>
+                            <p><strong>PROF.</strong> FRANCISCO SÔUSA</p>
+                            <p><strong>ALUNOS:</strong> ____________________</p>
+                            <div class="exam-meta">
+                                <span><strong>DATA:</strong> __/__/____</span>
+                                <span><strong>NOTA:</strong> ______</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="exam-body">
+                        <div class="section-title">Orientações:</div>
+                        <ul class="orientacoes-list">
+                            <li id="cite-linear-algebra">Resolva usando operações com matrizes (adição, subtração,
+                                multiplicação por escalar) e
+                                determinantes 3×3 por cofatores (Teorema de Laplace).</li>
+                            <li id="cite-tools">Implemente em Python e valide com <code>numpy.linalg.det</code>.</li>
+                            <li>Use o espaço abaixo para cálculo e rascunho.</li>
+                            <li>Marque as respostas no Cartão-Resposta ao final.</li>
+                        </ul>
+
+                        <div class="quest-header">
+                            Questão 7 – Caso 7 – Índice de nobreza ponderado (1,2,3)
+                            <span class="pontos">(2,0 pontos)</span>
+                        </div>
+                        <ul class="pontos-detail" id="cite-det-meaning">
+                            <li>0,5 – Implementação Python correta (matrizes e operações)</li>
+                            <li>0,5 – Determinante por Laplace (cofatores) apresentado corretamente</li>
+                            <li>1,0 – Interpretação/Conclusão do resultado (ex.: singular/invertível)</li>
+                        </ul>
+
+                        <div class="section-title">Enunciado:</div>
+                        <p id="cite-why-here">Crie um índice de 'nobreza' do mix de produção: <span
+                                id="cite-what">Básico=1, Luxo=2, Requinte=3.</span> Calcule os
+                            índices de Mogno e Cerejeira por multiplicação matricial e monte uma matriz 3×3. Calcule o
+                            determinante via cofatores.</p>
+
+                        <div class="section-title">Tarefas:</div>
+                        <ol class="tarefas-list" id="cite-goals">
+                            <li>Defina <strong>w = [1,2,3]</strong>.</li>
+                            <li>Calcule <strong>indice_mogno = P_mogno · w</strong> e <strong>indice_cerejeira =
+                                    P_cerejeira · w</strong>.</li>
+                            <li>Monte <strong>A7</strong>:
+                                <div class="matrix-box">
+                                    A7 = [[indice_mogno, indice_cerejeira, soma],<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fech_mogno, fech_cerejeira, fech_total],<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 2, 3]]
+                                </div>
+                            </li>
+                            <li>Calcule <strong>det(A7)</strong> por Laplace.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contextualization Modal -->
+    <div id="contextoModal" class="modal-overlay">
+        <div class="modal-content contextual-modal-content">
+            <div class="modal-header">
+                <h2>Contextualização do Problema</h2>
+                <button id="closeContextoModal" class="close-btn">&times;</button>
+            </div>
+
+            <!-- Selection Screen -->
+            <div id="contextoSelect" class="contexto-state">
+                <p class="selection-guide">Escolha uma abordagem para entender o problema:</p>
+                <div class="selection-grid">
+                    <div class="selection-card" data-target="academico">
+                        <div class="sel-icon"><i data-lucide="graduation-cap"></i></div>
+                        <h3>Problema do Enunciado</h3>
+                        <p>Análise técnica da produção de Mogno e Cerejeira sob a ótica da Álgebra Linear.</p>
+                    </div>
+                    <div class="selection-card" data-target="cotidiano">
+                        <div class="sel-icon"><i data-lucide="smartphone"></i></div>
+                        <h3>Problema do Cotidiano</h3>
+                        <p>Como o mesmo conceito matemático se aplica na escolha do seu próximo smartphone.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide Storyteller: Academico -->
+            <div id="contextoAcademico" class="contexto-state storyteller hidden">
+                <div class="slides-wrapper">
+                    <div class="slide active" data-step="1">
+                        <div class="slide-visual">
+                            <i data-lucide="home" class="hero-icon"></i>
+                        </div>
+                        <div class="slide-text">
+                            <h3>A Marcenaria</h3>
+                            <p>Imagine uma marcenaria que produz dois tipos de móveis: <strong>Mogno</strong> e
+                                <strong>Cerejeira</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="slide" data-step="2">
+                        <div class="slide-visual categories-reveal">
+                            <div class="cat-item" style="--delay: 1">Básico</div>
+                            <div class="cat-item" style="--delay: 2">Luxo</div>
+                            <div class="cat-item" style="--delay: 3">Requinte</div>
+                        </div>
+                        <div class="slide-text">
+                            <h3>Composições</h3>
+                            <p>Cada produto possui diferentes composições de acabamento, classificadas em três
+                                categorias: <strong>Básico, Luxo e Requinte</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="slide" data-step="3">
+                        <div class="slide-visual">
+                            <i data-lucide="award" class="hero-icon accent"></i>
+                        </div>
+                        <div class="slide-text">
+                            <h3>O Índice de Nobreza</h3>
+                            <p>A empresa deseja avaliar qual produto possui maior <strong>"nobreza"</strong> — ou seja,
+                                qual concentra mais valor agregado nas categorias superiores.</p>
+                        </div>
+                    </div>
+
+                    <div class="slide" data-step="4">
+                        <div class="slide-visual">
+                            <div class="matrix-viz">
+                                <div class="row"><span>Mogno</span> [x, y, z]</div>
+                                <div class="row"><span>Cerejeira</span> [a, b, c]</div>
+                            </div>
+                        </div>
+                        <div class="slide-text">
+                            <h3>Organização em Matrizes</h3>
+                            <p>Ao colocar Mogno e Cerejeira em linhas e as categorias em colunas, criamos a estrutura
+                                necessária para que a <strong>matemática matricial</strong> funcione.</p>
+                        </div>
+                    </div>
+
+                    <div class="slide" data-step="5">
+                        <div class="slide-visual">
+                            <i data-lucide="git-merge" class="hero-icon"></i>
+                        </div>
+                        <div class="slide-text">
+                            <h3>Multiplicação Matricial</h3>
+                            <p>Combinamos a produção com o vetor de pesos <strong>w = [1, 2, 3]</strong>. Isso calcula o
+                                índice final de forma instantânea para todos os produtos.</p>
+                        </div>
+                    </div>
+
+                    <div class="slide" data-step="6">
+                        <div class="slide-visual">
+                            <i data-lucide="file-search" class="hero-icon alert"></i>
+                        </div>
+                        <div class="slide-text">
+                            <h3>O Veredito (Determinante)</h3>
+                            <p>O determinante de A7 revela se os perfis de produção são distintos (L.I.) ou se seguem o
+                                mesmo padrão (L.D.), garantindo a solução única do problema.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-controls">
+                    <button class="btn-story back"><i data-lucide="chevron-left"></i> Voltar</button>
+                    <div class="progress-dots"></div>
+                    <button class="btn-story next">Continuar <i data-lucide="chevron-right"></i></button>
+                    <button class="btn-story finish hidden"><i data-lucide="check"></i> Finalizar</button>
+                </div>
+            </div>
+
+            <!-- Slide Storyteller: Cotidiano -->
+            <div id="contextoCotidiano" class="contexto-state storyteller hidden">
+                <div class="slides-wrapper">
+                    <div class="slide active" data-step="1">
+                        <div class="slide-visual">
+                            <i data-lucide="smartphone" class="hero-icon"></i>
+                        </div>
+                        <div class="slide-text">
+                            <h3>O Novo Celular</h3>
+                            <p>Imagine que você vai escolher um celular e quer saber qual é o "melhor" considerando seus
+                                gostos, sem achismo.</p>
+                        </div>
+                    </div>
+
+                    <div class="slide" data-step="2">
+                        <div class="slide-visual weights-reveal">
+                            <div class="weight-item" style="--delay: 1">Câmera (1)</div>
+                            <div class="weight-item" style="--delay: 2">Bateria (2)</div>
+                            <div class="weight-item" style="--delay: 3">Desempenho (3)</div>
+                        </div>
+                        <div class="slide-text">
+                            <h3>Critérios e Pesos</h3>
+                            <p>Você atribui pesos: Câmera importa menos (1), enquanto <strong>Desempenho (3)</strong> é
+                                o mais valioso. Estes são exatamente o vetor <strong>w = [1, 2, 3]</strong>!</p>
+                        </div>
+                    </div>
+
+                    <div class="slide" data-step="3">
+                        <div class="slide-visual">
+                            <i data-lucide="layers" class="hero-icon accent"></i>
+                        </div>
+                        <div class="slide-text">
+                            <h3>Matemática Identica</h3>
+                            <p>Multiplicar a matriz de notas dos celulares pelo vetor de pesos gera o <strong>Índice de
+                                    Qualidade</strong>. O maior índice é o celular "mais nobre" para você.</p>
+                        </div>
+                    </div>
+
+                    <div class="slide" data-step="4">
+                        <div class="slide-visual code-comparison">
+                            <div class="code-tag list-tag">Listas (Python Normal)</div>
+                            <code class="code-small">for c in celulares: idx = c[0]*w[0] + ...</code>
+                            <div class="code-tag numpy-tag">Matrizes (NumPy)</div>
+                            <code class="code-small highlight">indices = celulares @ pesos</code>
+                        </div>
+                        <div class="slide-text">
+                            <h3>Eficiência Profissional</h3>
+                            <p>Enquanto listas exigem loops e mais linhas, a <strong>Álgebra Linear com NumPy</strong>
+                                resolve tudo em uma linha elegante e rápida.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-controls">
+                    <button class="btn-story back"><i data-lucide="chevron-left"></i> Voltar</button>
+                    <div class="progress-dots"></div>
+                    <button class="btn-story next">Continuar <i data-lucide="chevron-right"></i></button>
+                    <button class="btn-story finish hidden"><i data-lucide="check"></i> Finalizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Análise do Caso Modal -->
+    <div id="analiseModal" class="modal-overlay">
+        <div class="modal-content contextual-modal-content">
+            <div class="modal-header">
+                <h2>Análise do Caso</h2>
+                <button id="closeAnaliseModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Selection Screen (similar to contextualização) -->
+                <div id="analiseSelect" class="contexto-state selection-menu">
+                    <div class="selection-card" data-target="calculo-manual">
+                        <div class="sel-icon"><i data-lucide="pencil"></i></div>
+                        <h3>Cálculo à mão</h3>
+                        <p>Visualizar cálculo completo em SVG.</p>
+                    </div>
+                    <div class="selection-card" data-target="figjam-analise">
+                        <div class="sel-icon"><i data-lucide="link-2"></i></div>
+                        <h3>FigJam desenhado</h3>
+                        <p>Abrir resolução feita no FigJam.</p>
+                    </div>
+                </div>
+
+                <!-- Manual calculation view -->
+                <div id="analiseManual" class="contexto-state hidden" style="text-align:center;">
+                    <object data="assets/file/calculo.svg" type="image/svg+xml" width="100%" height="600px">
+                        <!-- SVG will appear here -->
+                    </object>
+                    <button class="btn-story back" style="margin-top:16px;" onclick="(function(){document.querySelectorAll('#analiseModal .contexto-state').forEach(s=>s.classList.add('hidden'));document.getElementById('analiseSelect').classList.remove('hidden');})()"><i data-lucide="chevron-left"></i> Voltar ao menu</button>
+                </div>
+
+                <!-- FigJam view -->
+                <div id="analiseFigjam" class="contexto-state hidden" style="text-align:center;">
+                    <div style="margin:24px 0;">
+                        <a href="https://figjam.com/" target="_blank" id="figjamLink" style="color:#2563eb;text-decoration:underline;">Abrir FigJam (link em breve)</a>
+                    </div>
+                    <button class="btn-story back" style="margin-top:16px;" onclick="(function(){document.querySelectorAll('#analiseModal .contexto-state').forEach(s=>s.classList.add('hidden'));document.getElementById('analiseSelect').classList.remove('hidden');})()"><i data-lucide="chevron-left"></i> Voltar ao menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Objetivo Geral Modal -->
+    <div id="geralModal" class="modal-overlay">
+        <div class="modal-content obj-modal-content">
+            <div class="modal-header">
+                <h2>Objetivo Geral</h2>
+                <button id="closeGeralModal" class="close-btn">&times;</button>
+            </div>
+            <div class="obj-card main-objective">
+                <div class="obj-icon"><i data-lucide="target"></i></div>
+                <div class="obj-body">
+                    <p class="obj-lead">Para que serve esse estudo?</p>
+                    <p>Desenvolver um <strong>índice de nobreza ponderado</strong> para o mix de produção de uma
+                        marcenaria, utilizando conceitos de <strong>Álgebra Linear</strong> como multiplicação
+                        matricial e cálculo de determinante via <strong>Teorema de Laplace</strong> para analisar
+                        matematicamente o valor agregado dos produtos Mogno e Cerejeira, verificando a
+                        <strong>independência linear</strong> do sistema por meio da implementação em <strong>Python com
+                            NumPy</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Objetivos Especificos Modal -->
+    <div id="especificosModal" class="modal-overlay">
+        <div class="modal-content obj-modal-content storyteller">
+            <div class="modal-header">
+                <h2>Objetivos Específicos</h2>
+                <button id="closeEspecificosModal" class="close-btn">&times;</button>
+            </div>
+
+            <div class="slides-wrapper">
+                <!-- Step 1 -->
+                <div class="slide active" data-step="1">
+                    <div class="slide-visual">
+                        <div class="weight-reveal">
+                            <div class="weight-item" style="--delay: 1">w = [1, 2, 3]</div>
+                        </div>
+                    </div>
+                    <div class="slide-text">
+                        <h3>1. Definição de Pesos</h3>
+                        <p>Estabelecer o vetor de pesos <strong>w = [1, 2, 3]</strong> representando as categorias
+                            <strong>Básico, Luxo e Requinte</strong> do mix de produção.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="slide" data-step="2">
+                    <div class="slide-visual">
+                        <i data-lucide="git-merge" class="hero-icon"></i>
+                    </div>
+                    <div class="slide-text">
+                        <h3>2. Cálculo de Índices</h3>
+                        <p>Calcular os índices de nobreza de Mogno e Cerejeira por meio da <strong>multiplicação
+                                matricial</strong> entre a matriz de produção e o vetor de pesos.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="slide" data-step="3">
+                    <div class="slide-visual">
+                        <div class="matrix-viz">
+                            <div class="row">[indice_m, indice_c, soma]</div>
+                            <div class="row">[fech_m, fech_c, fech_t]</div>
+                            <div class="row">[1, 2, 3]</div>
+                        </div>
+                    </div>
+                    <div class="slide-text">
+                        <h3>3. Montagem da Matriz A7</h3>
+                        <p>Montar a matriz <strong>A7 (3×3)</strong> organizando os índices calculados, os fechamentos
+                            de cada produto e o vetor de pesos.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="slide" data-step="4">
+                    <div class="slide-visual">
+                        <i data-lucide="layout-grid" class="hero-icon accent"></i>
+                    </div>
+                    <div class="slide-text">
+                        <h3>4. Teorema de Laplace</h3>
+                        <p>Calcular o determinante da matriz A7 utilizando o <strong>Teorema de Laplace</strong>
+                            (expansão por cofatores), apresentando cada etapa do desenvolvimento.</p>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="slide" data-step="5">
+                    <div class="slide-visual">
+                        <i data-lucide="code-2" class="hero-icon"></i>
+                    </div>
+                    <div class="slide-text">
+                        <h3>5. Validação em Python</h3>
+                        <p>Implementar o código em <strong>Python utilizando NumPy</strong> para validar os resultados
+                            obtidos manualmente e garantir a precisão.</p>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="slide" data-step="6">
+                    <div class="slide-visual">
+                        <i data-lucide="file-check" class="hero-icon alert"></i>
+                    </div>
+                    <div class="slide-text">
+                        <h3>6. Interpretação Logística</h3>
+                        <p>Interpretar o resultado do determinante, concluindo se a matriz é <strong>singular ou
+                                invertível</strong> e o que isso significa para o sistema de produção.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-controls">
+                <button class="btn-story back"><i data-lucide="chevron-left"></i> Voltar</button>
+                <div class="progress-dots"></div>
+                <button class="btn-story next">Continuar <i data-lucide="chevron-right"></i></button>
+                <button class="btn-story finish hidden"><i data-lucide="check"></i> Finalizar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Proposta Pedagogica Modal -->
+    <div id="propostaModal" class="modal-overlay">
+        <div class="modal-content obj-modal-content">
+            <div class="modal-header">
+                <h2>Proposta Pedagógica</h2>
+                <button id="closePropostaModal" class="close-btn">&times;</button>
+            </div>
+            <div class="obj-card main-objective">
+                <div class="obj-icon">
+                    <i data-lucide="graduation-cap"></i>
+                </div>
+                <div class="obj-body">
+                    <p class="obj-lead">Teoria na Prática Empresarial</p>
+                    <p>O estudo de caso do <strong>Índice de Nobreza Ponderado</strong> demonstra como a Álgebra Linear
+                        pode ser aplicada em situações reais de tomada de decisão empresarial. Por meio de um problema
+                        concreto de uma marcenaria, o caso permite ao aluno compreender na prática o funcionamento da
+                        multiplicação matricial, a construção de determinantes 3×3 via Teorema de Laplace e a
+                        interpretação
+                        dos resultados matemáticos no contexto do problema. Além disso, a implementação em Python com
+                        NumPy conecta o raciocínio matemático ao desenvolvimento computacional, preparando o aluno para
+                        resolver problemas reais com ferramentas modernas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conclusao do Caso Modal -->
+    <div id="conclusaoModal" class="modal-overlay">
+        <div class="modal-content obj-modal-content">
+            <div class="modal-header">
+                <h2>Conclusão do Caso</h2>
+                <button id="closeConclusaoModal" class="close-btn">&times;</button>
+            </div>
+            <div class="conclusion-container">
+                <!-- Section 1: Impacto Teórico -->
+                <div class="conclusion-section">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #2563eb 0%, #0066ff 100%);">
+                        <i data-lucide="lightbulb"></i>
+                    </div>
+                    <div class="section-content">
+                        <h3>Impacto Teórico</h3>
+                        <p>Este estudo de caso demonstrou na prática como a <strong>Álgebra Linear</strong> vai muito além da teoria acadêmica, sendo uma ferramenta poderosa para resolver problemas reais de tomada de decisão. Por meio do <strong>Índice de Nobreza Ponderado</strong>, foi possível comparar matematicamente o valor agregado dos produtos Mogno e Cerejeira, utilizando o vetor de pesos w = [1, 2, 3] para representar a crescente importância das categorias Básico, Luxo e Requinte.</p>
+                    </div>
+                </div>
+
+                <!-- Section 2: Aplicabilidade Prática -->
+                <div class="conclusion-section">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <div class="section-content">
+                        <h3>Aplicabilidade Prática</h3>
+                        <p>A metodologia de ponderação por pesos mostrou-se extremamente aplicável no cotidiano o mesmo raciocínio pode ser usado para <strong>comparar celulares, avaliar candidatos</strong> em processos seletivos, <strong>ranquear produtos</strong> em e-commerces ou qualquer situação onde múltiplos critérios precisam ser combinados em um único índice de decisão.</p>
+                    </div>
+                </div>
+
+                <!-- Section 3: Integração com Computação -->
+                <div class="conclusion-section">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                        <i data-lucide="code-2"></i>
+                    </div>
+                    <div class="section-content">
+                        <h3>Implementação Computacional</h3>
+                        <p>A implementação em <strong>Python com NumPy</strong> comprovou que conceitos matemáticos complexos podem ser traduzidos em poucas linhas de código eficiente, conectando o raciocínio matemático ao desenvolvimento computacional e mostrando como a <strong>programação e a matemática</strong> se complementam na resolução de problemas reais.</p>
+                    </div>
+                </div>
+
+                <!-- Section 4: Análise do Resultado -->
+                <div class="conclusion-section">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <div class="section-content">
+                        <h3>Análise do Determinante</h3>
+                        <p>O cálculo do determinante da matriz A7 via <strong>Teorema de Laplace</strong> resultou em <strong>det(A7) = 0</strong>, classificando a matriz como <strong>singular</strong>. Esse resultado indica que existe <strong>dependência linear</strong> entre as linhas da matriz — ou seja, os índices calculados para Mogno e Cerejeira não são linearmente independentes entre si. Matematicamente, isso significa que <strong>o sistema não possui solução única</strong> e a matriz não é invertível.</p>
+                    </div>
+                </div>
+
+                <!-- Section 5: Reflectão Final -->
+                <div class="conclusion-section">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">
+                        <i data-lucide="check-circle-2"></i>
+                    </div>
+                    <div class="section-content">
+                        <h3>Reflexão Final</h3>
+                        <p>Este estudo reforçou que aprender <strong>Álgebra Linear por meio de casos concretos</strong> torna o aprendizado significativo. Não se trata apenas de <em>calcular determinantes</em>, mas de entender o que esses resultados dizem sobre o mundo real e como a matemática resolve problemas práticos do dia a dia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Código Final -->
+    <div id="codeModal" class="modal-overlay">
+        <div class="modal-content code-modal-content">
+            <div class="modal-header">
+                <div class="header-info">
+                    <h2>Código Final (Python + NumPy)</h2>
+                    <span id="pyStatus" class="status-badge">Carregando Python...</span>
+                </div>
+                <button id="closeCodeModal" class="close-btn">&times;</button>
+            </div>
+            <div class="code-split-container">
+                <!-- Left: Source Code only -->
+                <div class="code-editor-panel">
+                    <div class="panel-header">
+                        <span><i data-lucide="file-code"></i> caso7.py</span>
+                    </div>
+                    <pre class="line-numbers"><code id="pythonSource" class="language-python"># Carregando código...</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sobre o Site Modal -->
+    <div id="sobreModal" class="modal-overlay">
+        <div class="modal-content obj-modal-content">
+            <div class="modal-header">
+                <h2>Sobre o Projeto & Tecnologia</h2>
+                <button id="closeSobreModal" class="close-btn">&times;</button>
+            </div>
+            <div class="obj-card main-objective">
+                <div class="obj-icon" style="background: var(--accent-blue);">
+                    <i data-lucide="code-2"></i>
+                </div>
+                <div class="obj-body">
+                    <p class="obj-lead">Por que um site e não slides?</p>
+                    <p>Em um mundo em constante evolução tecnológica, apresentar resultados por meio de ferramentas
+                        interativas e funcionais traz uma <strong>credibilidade</strong> muito superior aos slides
+                        convencionais. A ideia foi transformar a teoria em um "retorno crível", uma aplicação real que
+                        pudesse ser experimentada.</p>
+
+                    <p class="obj-lead" style="margin-top: 20px;">Desenvolvimento e Tecnologia</p>
+                    <p>O projeto foi construído utilizando uma base sólida de <strong>HTML5 e CSS3</strong> para a
+                        estrutura e design premium. O dinamismo e a lógica complexa (como os Storytellers) foram
+                        implementados em <strong>JavaScript</strong>, utilizando uma metodologia de desenvolvimento
+                        focada em tarefas iterativas e com o <strong>forte auxílio de Inteligência Artificial</strong>
+                        para otimização e refinamento de código.</p>
+
+                    <p class="obj-lead" style="margin-top: 20px;">Como foi feito a execução do código no site?</p>
+                    <p>Para tornar o projeto verdadeiramente interativo, utilizamos o <strong>Pyodide</strong>, uma
+                        distribuição do Python para WebAssembly (WASM). Isso permite que o código original da equipe
+                        seja executado em tempo real diretamente no seu navegador, capturando os resultados e as
+                        validações do <strong>NumPy</strong> sem a necessidade de um servidor backend.</p>
+
+                    <p class="obj-lead" style="margin-top: 20px;">Créditos e Revisão</p>
+                    <p>Desenvolvido pela equipe para a disciplina de <strong>Álgebra Linear</strong> do
+                        <strong>Professor Francisco Sousa</strong>. O projeto contou com a valiosa revisão técnica
+                        dos professores <strong>John, Paulo e Janaína</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
