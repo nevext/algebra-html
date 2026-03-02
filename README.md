@@ -70,18 +70,18 @@ O projeto é totalmente responsivo, otimizado para:
 | Nome | Função |
 |------|--------|
 | **David Neves** | Desenvolvedor Principal |
-| **Marcos Paulo** | Apresentação / Design |
+| **João Pedro** | Apresentação / Design |
 | **Samia Albuquerque** | Análise do Caso |
 | **Yara da Silva** | Código Final |
 | **Josias Santos** | Análise do Caso |
 
 ## 🎬 Cronograma de Apresentação
 
-1. Introdução - Marcos Paulo
+1. Introdução - ?
 2. Estudo de Caso - Marcos Paulo
 3. Matriz A - David Neves
 4. Matriz B - David Neves
-5. Pesos - Marcos Paulo
+5. Pesos - ?
 6. Análise do Caso - Samia & Josias
 7. Cálculo à Mão - Samia Albuquerque
 8. Código Final - David & Yara
