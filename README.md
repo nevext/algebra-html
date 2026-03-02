@@ -90,21 +90,7 @@ O projeto é totalmente responsivo, otimizado para:
 
 ## 🔧 Como Executar
 
-1. Clone o repositório:
-```bash
-git clone https://github.com/nevext/algebra-html.git
-```
-
-2. Abra o arquivo `index.html` no navegador ou use um servidor local:
-```bash
-# Com Python
-python -m http.server 8000
-
-# Com Node.js (npx)
-npx serve
-```
-
-3. Acesse `http://localhost:8000` no navegador
+tem literalmente o link ali na direita bb
 
 ## 📝 Licença
 
