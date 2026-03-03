@@ -1,4 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
-  <rect width="100%" height="100%" fill="#f8f9fa"/>
-  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#6b7280" font-size="24">SVG de cálculo à mão ficará aqui</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <style>
+      .placeholder-bg { fill: #f0f4f8; }
+      .placeholder-border { stroke: #0066ff; stroke-width: 2; fill: none; }
+      .placeholder-text { font-family: 'Outfit', sans-serif; fill: #4d7a99; text-anchor: middle; }
+      .placeholder-title { font-size: 24px; font-weight: 700; }
+      .placeholder-subtitle { font-size: 16px; font-weight: 400; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect class="placeholder-bg" width="1200" height="800"/>
+  
+  <!-- Border -->
+  <rect class="placeholder-border" x="40" y="40" width="1120" height="720" rx="8"/>
+  
+  <!-- Main Text -->
+  <text class="placeholder-text placeholder-title" x="600" y="320">
+    📄 Cálculo à Mão
+  </text>
+  <text class="placeholder-text placeholder-subtitle" x="600" y="370">
+    Imagens dos cálculos manuais com zoom interativo
+  </text>
+  
+  <!-- Instructions -->
+  <text class="placeholder-text placeholder-subtitle" x="600" y="600">
+    Use o zoom (+/−) ou roda do mouse para ampliar
+  </text>
+  <text class="placeholder-text placeholder-subtitle" x="600" y="640">
+    Arraste a imagem para movimentar
+  </text>
 </svg>
