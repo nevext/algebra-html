@@ -515,157 +515,43 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSimpleModal(btnConclusao, conclusaoModal, closeConclusaoModal, 'btnConclusao');
     setupSimpleModal(btnSobre, sobreModal, closeSobreModal, 'btnSobre');
     setupSimpleModal(btnCodigo, codeModal, closeCodeModal, 'btnCodigo');
-
-    // --- Cálculo à Mão Modal Handler ---
-    const calculoManualModal = document.getElementById('calculoManualModal');
-    const btnCalculoManual = document.getElementById('btnCalculoManual');
-    const closeCalculoManualModal = document.getElementById('closeCalculoManualModal');
-
-    if (btnCalculoManual && calculoManualModal && closeCalculoManualModal) {
-        btnCalculoManual.addEventListener('click', () => {
-            markLastVisited('btnCalculoManual');
-            calculoManualModal.classList.add('active');
-            document.body.classList.add('modal-open');
-            initSVGZoom();
-        });
-
-        closeCalculoManualModal.addEventListener('click', () => {
-            calculoManualModal.classList.remove('active');
-            document.body.classList.remove('modal-open');
-        });
-
-        calculoManualModal.addEventListener('click', (e) => {
-            if (e.target === calculoManualModal) {
-                calculoManualModal.classList.remove('active');
-                document.body.classList.remove('modal-open');
-            }
-        });
-    }
-
-    // SVG Zoom functionality
-    function initSVGZoom() {
-        const svgContainers = document.querySelectorAll('.svg-wrapper');
-        
-        svgContainers.forEach(container => {
-            const svg = container.querySelector('svg');
-            if (!svg) return;
-
-            let scale = 1;
-            let panning = false;
-            let pointX = 0;
-            let pointY = 0;
-            let start = { x: 0, y: 0 };
-
-            // Load SVG content from file
-            const svgId = svg.id;
-            if (svgId === 'page1' || svgId === 'page2') {
-                loadSVGContent(svgId, svg);
-            }
-
-            // Wheel zoom
-            container.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                
-                const wheelDelta = e.deltaY > 0 ? -0.1 : 0.1;
-                scale = Math.max(0.5, Math.min(5, scale + wheelDelta));
-                
-                svg.style.transform = `scale(${scale})`;
-            });
-
-            // Double-click to reset
-            container.addEventListener('dblclick', () => {
-                scale = 1;
-                svg.style.transform = 'scale(1)';
-            });
-
-            // Pan on drag
-            container.addEventListener('mousedown', (e) => {
-                panning = true;
-                start.x = e.clientX - pointX;
-                start.y = e.clientY - pointY;
-                container.classList.add('zoomed');
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                if (!panning || scale <= 1) return;
-                pointX = e.clientX - start.x;
-                pointY = e.clientY - start.y;
-                svg.style.transformOrigin = 'center';
-                svg.style.cursor = 'grabbing';
-            });
-
-            document.addEventListener('mouseup', () => {
-                panning = false;
-                container.classList.remove('zoomed');
-            });
-
-            // Touch support for mobile
-            let touchScale = 1;
-            container.addEventListener('touchstart', (e) => {
-                if (e.touches.length === 2) {
-                    touchScale = scale;
-                }
-            });
-
-            container.addEventListener('touchmove', (e) => {
-                if (e.touches.length === 2) {
-                    e.preventDefault();
-                    const touch1 = e.touches[0];
-                    const touch2 = e.touches[1];
-                    const distance = Math.hypot(
-                        touch2.clientX - touch1.clientX,
-                        touch2.clientY - touch1.clientY
-                    );
-                    
-                    const initialDistance = 150; // Approximate initial distance
-                    const scaleFactor = distance / initialDistance;
-                    scale = Math.max(0.5, Math.min(5, touchScale * scaleFactor));
-                    
-                    svg.style.transform = `scale(${scale})`;
-                }
-            });
-        });
-    }
-
-    // Load SVG content from file
-    function loadSVGContent(pageId, svgElement) {
-        const fileName = pageId === 'page1' ? 'pagina1.svg' : 'pagina2.svg';
-        const filePath = 'assets/img/' + fileName;
-
-        fetch(filePath)
-            .then(response => response.text())
-            .then(svgContent => {
-                // Parse the SVG content
-                const parser = new DOMParser();
-                const svgDoc = parser.parseFromString(svgContent, 'image/svg+xml');
-                
-                if (svgDoc.documentElement.tagName === 'svg') {
-                    // Copy the content from fetched SVG to the element
-                    const children = Array.from(svgDoc.documentElement.childNodes);
-                    children.forEach(child => {
-                        if (child.nodeType === 1) { // Element node
-                            svgElement.appendChild(child.cloneNode(true));
-                        }
-                    });
-                    
-                    // Preserve viewBox
-                    const viewBox = svgDoc.documentElement.getAttribute('viewBox');
-                    if (viewBox) {
-                        svgElement.setAttribute('viewBox', viewBox);
-                    }
-                }
-            })
-            .catch(err => {
-                console.warn(`Não foi possível carregar ${fileName}:`, err);
-                // Add placeholder text
-                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', '400');
-                text.setAttribute('y', '500');
-                text.setAttribute('text-anchor', 'middle');
-                text.setAttribute('font-size', '24');
-                text.setAttribute('fill', '#999');
-                text.textContent = `Carregando ${fileName}...`;
-                svgElement.appendChild(text);
-            });
-    }
 });
+
+/* SVG Zoom Functions */
+let svgZoomLevels = new Map();
+
+function zoomSvg(button, delta) {
+    const controls = button.closest('.svg-zoom-controls');
+    const container = button.closest('.svg-zoom-container');
+    const viewport = container.querySelector('.svg-zoom-viewport');
+    const content = container.querySelector('.svg-zoom-content');
+    const percentDisplay = controls.querySelector('.zoom-percent');
+    
+    let currentZoom = svgZoomLevels.get(container) || 1;
+    let newZoom = Math.max(0.5, Math.min(3, currentZoom + delta));
+    
+    content.style.transform = `scale(${newZoom})`;
+    svgZoomLevels.set(container, newZoom);
+    percentDisplay.textContent = Math.round(newZoom * 100);
+    
+    // Update button states
+    const buttons = controls.querySelectorAll('.svg-zoom-btn');
+    buttons[0].disabled = newZoom <= 0.5;
+    buttons[2].disabled = newZoom >= 3;
+}
+
+function resetZoom(button) {
+    const controls = button.closest('.svg-zoom-controls');
+    const container = button.closest('.svg-zoom-container');
+    const content = container.querySelector('.svg-zoom-content');
+    const percentDisplay = controls.querySelector('.zoom-percent');
+    
+    content.style.transform = 'scale(1)';
+    svgZoomLevels.set(container, 1);
+    percentDisplay.textContent = '100';
+    
+    // Update button states
+    const buttons = controls.querySelectorAll('.svg-zoom-btn');
+    buttons[0].disabled = false;
+    buttons[2].disabled = false;
+}

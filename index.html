@@ -65,7 +65,6 @@
                     <li id="btnGeral"><i data-lucide="target"></i> Objetivo geral</li>
                     <li id="btnEspecificos"><i data-lucide="list-checks"></i> Objetivos específicos</li>
                     <li id="btnAnalise"><i data-lucide="search"></i> Análise do caso</li>
-                    <li id="btnCalculoManual"><i data-lucide="pen-tool"></i> Cálculo à mão</li>
                     <li id="btnProposta"><i data-lucide="presentation"></i> Proposta pedagógica</li>
                     <li id="btnCodigo"><i data-lucide="code-2"></i> Código final do estudo</li>
                     <li id="btnConclusao"><i data-lucide="check-circle-2"></i> Conclusão</li>
@@ -599,17 +598,51 @@
                 </div>
 
                 <!-- Manual calculation view -->
-                <div id="analiseManual" class="contexto-state hidden" style="text-align:center;">
-                    <object data="assets/file/calculo.svg" type="image/svg+xml" width="100%" height="600px">
-                        <!-- SVG will appear here -->
-                    </object>
-                    <button class="btn-story back" style="margin-top:16px;" onclick="(function(){document.querySelectorAll('#analiseModal .contexto-state').forEach(s=>s.classList.add('hidden'));document.getElementById('analiseSelect').classList.remove('hidden');})()"><i data-lucide="chevron-left"></i> Voltar ao menu</button>
+                <div id="analiseManual" class="contexto-state hidden" style="padding:0;">
+                    <div class="svg-pages-container" style="padding: 0 16px;">
+                        <!-- Página 1 -->
+                        <div class="svg-page">
+                            <div class="svg-page-label">Cálculo à Mão - Página 1</div>
+                            <div class="svg-zoom-container">
+                                <div class="svg-zoom-viewport">
+                                    <object class="svg-zoom-content" data="assets/file/pagina1.svg" type="image/svg+xml">
+                        <!-- Página 1 SVG will appear here -->
+                                    </object>
+                                </div>
+                                <div class="svg-zoom-controls" onclick="event.stopPropagation();">
+                                    <button class="svg-zoom-btn" onclick="zoomSvg(this, -0.2)">−</button>
+                                    <span class="svg-zoom-level"><span class="zoom-percent">100</span>%</span>
+                                    <button class="svg-zoom-btn" onclick="zoomSvg(this, 0.2)">+</button>
+                                    <button class="svg-zoom-btn" onclick="resetZoom(this)">Resetar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Página 2 -->
+                        <div class="svg-page">
+                            <div class="svg-page-label">Cálculo à Mão - Página 2</div>
+                            <div class="svg-zoom-container">
+                                <div class="svg-zoom-viewport">
+                                    <object class="svg-zoom-content" data="assets/file/pagina2.svg" type="image/svg+xml">
+                        <!-- Página 2 SVG will appear here -->
+                                    </object>
+                                </div>
+                                <div class="svg-zoom-controls" onclick="event.stopPropagation();">
+                                    <button class="svg-zoom-btn" onclick="zoomSvg(this, -0.2)">−</button>
+                                    <span class="svg-zoom-level"><span class="zoom-percent">100</span>%</span>
+                                    <button class="svg-zoom-btn" onclick="zoomSvg(this, 0.2)">+</button>
+                                    <button class="svg-zoom-btn" onclick="resetZoom(this)">Resetar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-story back" style="margin: 24px auto 0; display: block;" onclick="(function(){document.querySelectorAll('#analiseModal .contexto-state').forEach(s=>s.classList.add('hidden'));document.getElementById('analiseSelect').classList.remove('hidden');})();"><i data-lucide="chevron-left"></i> Voltar ao menu</button>
                 </div>
 
                 <!-- FigJam view -->
                 <div id="analiseFigjam" class="contexto-state hidden" style="text-align:center;">
                     <div style="margin:24px 0;">
-                        <a href="https://figjam.com/" target="_blank" id="figjamLink" style="color:#2563eb;text-decoration:underline;">Abrir FigJam (link em breve)</a>
+                        <a href="https://www.figma.com/board/lUkUPpTNbfuuk1XbaANr9t/Trabalho-%C3%81lgebra-Linear?node-id=0-1&t=0qnbTdeRTsuhdmkl-1" target="_blank" id="figjamLink" style="color:#2563eb;text-decoration:underline;">Abrir Quadro FigJam</a>
                     </div>
                     <button class="btn-story back" style="margin-top:16px;" onclick="(function(){document.querySelectorAll('#analiseModal .contexto-state').forEach(s=>s.classList.add('hidden'));document.getElementById('analiseSelect').classList.remove('hidden');})()"><i data-lucide="chevron-left"></i> Voltar ao menu</button>
                 </div>
@@ -825,50 +858,6 @@
                         <h3>Reflexão Final</h3>
                         <p>Este estudo reforçou que aprender <strong>Álgebra Linear por meio de casos concretos</strong> torna o aprendizado significativo. Não se trata apenas de <em>calcular determinantes</em>, mas de entender o que esses resultados dizem sobre o mundo real e como a matemática resolve problemas práticos do dia a dia.</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Cálculo à Mão -->
-    <div id="calculoManualModal" class="modal-overlay">
-        <div class="modal-content manual-modal-content">
-            <div class="modal-header">
-                <h2>Cálculo à Mão - Resolução Completa</h2>
-                <button id="closeCalculoManualModal" class="close-btn">&times;</button>
-            </div>
-            <div class="manual-container">
-                <div class="manual-header">
-                    <p class="manual-intro">Veja abaixo a resolução completa feita em caderno. Use o <strong>scroll do mouse</strong> ou os <strong>dedos</strong> para dar zoom em qualquer parte das páginas.</p>
-                    <a href="https://www.figma.com/board/lUkUPpTNbfuuk1XbaANr9t/Trabalho-%C3%81lgebra-Linear?node-id=0-1&t=0qnbTdeRTsuhdmkl-1" target="_blank" class="btn-figjam">
-                        <i data-lucide="external-link"></i> Abrir no FigJam
-                    </a>
-                </div>
-                
-                <div class="pages-gallery">
-                    <!-- Página 1 -->
-                    <div class="svg-container" id="page1Container">
-                        <div class="svg-wrapper" id="page1Wrapper">
-                            <svg id="page1" class="manual-svg" viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg">
-                                <!-- SVG será carregado do arquivo -->
-                            </svg>
-                        </div>
-                        <p class="page-label">Página 1 - Cálculos Iniciais</p>
-                    </div>
-                    
-                    <!-- Página 2 -->
-                    <div class="svg-container" id="page2Container">
-                        <div class="svg-wrapper" id="page2Wrapper">
-                            <svg id="page2" class="manual-svg" viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg">
-                                <!-- SVG será carregado do arquivo -->
-                            </svg>
-                        </div>
-                        <p class="page-label">Página 2 - Determinante e Conclusão</p>
-                    </div>
-                </div>
-                
-                <div class="zoom-info">
-                    <p><strong>💡 Dica:</strong> Use o mouse ou trackpad para fazer zoom. Clique duas vezes para restaurar.</p>
                 </div>
             </div>
         </div>
