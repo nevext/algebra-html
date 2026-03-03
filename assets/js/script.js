@@ -3,12 +3,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCronograma = document.getElementById('btnCronograma');
     const cronogramaModal = document.getElementById('cronogramaModal');
     const closeCronogramaModal = document.getElementById('closeCronogramaModal');
+    let cronogramaStep = 1;
 
     if (btnCronograma && cronogramaModal && closeCronogramaModal) {
         btnCronograma.addEventListener('click', (e) => {
             e.preventDefault();
             cronogramaModal.classList.add('active');
             document.body.classList.add('modal-open');
+            initCronogramaSlides();
         });
 
         closeCronogramaModal.addEventListener('click', () => {
@@ -20,6 +22,73 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === cronogramaModal) {
                 cronogramaModal.classList.remove('active');
                 document.body.classList.remove('modal-open');
+            }
+        });
+    }
+
+    function initCronogramaSlides() {
+        const container = cronogramaModal.querySelector('.cronograma-container');
+        if (!container) return;
+
+        const dotsContainer = container.querySelector('.progress-dots');
+        const slides = container.querySelectorAll('.slide');
+        const slideCount = slides.length;
+
+        // Initialize dots
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < slideCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot ' + (i === 0 ? 'active' : '');
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Setup navigation
+        const prevBtn = container.querySelector('#prevCronograma');
+        const nextBtn = container.querySelector('#nextCronograma');
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                updateCronogramaSlide(-1);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                updateCronogramaSlide(1);
+            });
+        }
+
+        cronogramaStep = 1;
+    }
+
+    function updateCronogramaSlide(direction) {
+        const container = cronogramaModal.querySelector('.cronograma-container');
+        if (!container) return;
+
+        const slides = container.querySelectorAll('.slide');
+        const slideCount = slides.length;
+        
+        cronogramaStep += direction;
+        
+        if (cronogramaStep < 1) cronogramaStep = 1;
+        if (cronogramaStep > slideCount) cronogramaStep = slideCount;
+
+        // Update slides
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active');
+            if (index + 1 === cronogramaStep) {
+                slide.classList.add('active');
+            }
+        });
+
+        // Update dots
+        const dots = container.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+            dot.classList.remove('active');
+            if (index + 1 === cronogramaStep) {
+                dot.classList.add('active');
             }
         });
     }
@@ -69,6 +138,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Lucide again for dynamic icons
     if (window.lucide) {
         window.lucide.createIcons();
+    }
+
+    // --- Last Visited Card Tracker ---
+    let lastVisitedCard = localStorage.getItem('lastVisitedCard') || null;
+    const navButtons = document.querySelectorAll('.etapas-nav li');
+
+    function markLastVisited(cardId) {
+        // Remove highlight from previous card
+        navButtons.forEach(btn => btn.classList.remove('last-visited'));
+        
+        // Add highlight to current card
+        const currentBtn = document.getElementById(cardId);
+        if (currentBtn) {
+            currentBtn.classList.add('last-visited');
+            localStorage.setItem('lastVisitedCard', cardId);
+            lastVisitedCard = cardId;
+        }
+    }
+
+    // Restore last visited card on page load
+    if (lastVisitedCard) {
+        const btn = document.getElementById(lastVisitedCard);
+        if (btn) {
+            btn.classList.add('last-visited');
+        }
     }
 
     // --- Slide Storyteller Logic ---
@@ -189,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnEquipe && teamModal && closeTeamModal) {
         btnEquipe.addEventListener('click', () => {
+            markLastVisited('btnEquipe');
             teamModal.classList.add('active');
             document.body.classList.add('modal-open');
         });
@@ -214,6 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnEstudo && studyModal && closeStudyModal) {
         btnEstudo.addEventListener('click', () => {
+            markLastVisited('btnEstudo');
             studyModal.classList.add('active');
             document.body.classList.add('modal-open');
         });
@@ -268,6 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnContexto) {
         btnContexto.addEventListener('click', () => {
+            markLastVisited('btnContexto');
             contextoModal.classList.add('active');
             document.body.classList.add('modal-open');
             showMainMenu();
@@ -318,6 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnAnalise && analiseModal && closeAnaliseModal) {
         btnAnalise.addEventListener('click', () => {
+            markLastVisited('btnAnalise');
             analiseModal.classList.add('active');
             document.body.classList.add('modal-open');
             // Reset to selection menu
@@ -380,9 +478,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    function setupSimpleModal(btn, modal, close) {
+    function setupSimpleModal(btn, modal, close, btnId) {
         if (btn && modal && close) {
             btn.addEventListener('click', () => {
+                if (btnId) markLastVisited(btnId);
                 modal.classList.add('active');
                 document.body.classList.add('modal-open');
 
@@ -410,10 +509,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    setupSimpleModal(btnGeral, geralModal, closeGeralModal);
-    setupSimpleModal(btnEspecificos, especificosModal, closeEspecificosModal);
-    setupSimpleModal(btnProposta, propostaModal, closePropostaModal);
-    setupSimpleModal(btnConclusao, conclusaoModal, closeConclusaoModal);
-    setupSimpleModal(btnSobre, sobreModal, closeSobreModal);
-    setupSimpleModal(btnCodigo, codeModal, closeCodeModal);
+    setupSimpleModal(btnGeral, geralModal, closeGeralModal, 'btnGeral');
+    setupSimpleModal(btnEspecificos, especificosModal, closeEspecificosModal, 'btnEspecificos');
+    setupSimpleModal(btnProposta, propostaModal, closePropostaModal, 'btnProposta');
+    setupSimpleModal(btnConclusao, conclusaoModal, closeConclusaoModal, 'btnConclusao');
+    setupSimpleModal(btnSobre, sobreModal, closeSobreModal, 'btnSobre');
+    setupSimpleModal(btnCodigo, codeModal, closeCodeModal, 'btnCodigo');
 });

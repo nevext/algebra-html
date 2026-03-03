@@ -167,23 +167,29 @@ a7 = [
 
 type_print("\nMatriz A7 montada:")
 for row in a7:
+    # imprime cada linha de A7 com separador de tabulação para visualização
     print("\t".join(str(x) for x in row))
 print()
 time.sleep(12)
 
 # função para determinante 3x3 por Laplace (cofatores)
 def det3(mat):
+    # desestrutura as três linhas da matriz 3x3
     a, b, c = mat[0]
     d, e, f = mat[1]
     g, h, i = mat[2]
+    # aplica a fórmula do determinante usando cofatores:
+    # a·(e·i - f·h) - b·(d·i - f·g) + c·(d·h - e·g)
     return a*(e*i - f*h) - b*(d*i - f*g) + c*(d*h - e*g)
 
+# calcula o determinante manualmente
 determinante = det3(a7)
 type_print("Calculando determinante por Laplace...")
 time.sleep(12)
 
 type_print(f"determinante (Laplace): {determinante}")
 
+# verifica se a matriz é singular (determinante zero) ou invertível
 if determinante == 0:
     type_print("Resultado: A7 é singular (não invertível)")
 else:
@@ -191,7 +197,10 @@ else:
 
 # validação com numpy
 try:
+    # numpy.linalg.det calcula o determinante de forma confiável
+    # converte A7 em array NumPy antes de chamar a função
     det_np = round(np.linalg.det(np.array(a7)))
     type_print(f"determinante (numpy): {det_np}")
 except Exception:
+    # caso numpy falhe (não instalado ou outro erro), apenas ignora
     pass

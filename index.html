@@ -84,100 +84,141 @@
                 <h2>Cronograma da Apresentação</h2>
                 <button id="closeCronogramaModal" class="close-btn">&times;</button>
             </div>
-            <div class="cronograma-container">
-                <!-- Equipe -->
-                <div class="cronograma-card">
-                    <div class="card-numero">1</div>
-                    <div class="card-etapa">Equipe</div>
-                    <div class="card-responsavel">
-                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
-                        <p><strong>David Neves</strong><br>Apresentar a equipe</p>
-                    </div>
-                </div>
-                <!-- Tipo de Estudo -->
-                <div class="cronograma-card">
-                    <div class="card-numero">2</div>
-                    <div class="card-etapa">Tipo de Estudo de Caso</div>
-                    <div class="card-responsavel">
-                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
-                        <p><strong>David Neves</strong><br>Conceituação</p>
-                    </div>
-                </div>
-                <!-- Contextualização -->
-                <div class="cronograma-card">
-                    <div class="card-numero">3</div>
-                    <div class="card-etapa">Contextualização do Problema</div>
-                    <div class="card-responsavel multi">
-                        <p><strong>Toda Equipe</strong><br>Explicação conjunta</p>
-                    </div>
-                </div>
-                <!-- Objetivo Geral -->
-                <div class="cronograma-card">
-                    <div class="card-numero">4</div>
-                    <div class="card-etapa">Objetivo Geral</div>
-                    <div class="card-responsavel">
-                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
-                        <p><strong>David Neves</strong><br>Apresentação</p>
-                    </div>
-                </div>
-                <!-- Objetivos Específicos -->
-                <div class="cronograma-card">
-                    <div class="card-numero">5</div>
-                    <div class="card-etapa">Objetivos Específicos</div>
-                    <div class="card-responsavel multi">
-                        <p><strong>Toda Equipe</strong><br>Detalhamento dos passos</p>
-                    </div>
-                </div>
-                <!-- Análise do Caso -->
-                <div class="cronograma-card">
-                    <div class="card-numero">6</div>
-                    <div class="card-etapa">Análise do Caso</div>
-                    <div class="card-responsavel">
-                        <div class="dual-fotos">
-                            <img src="assets/img/samia_logo.png" alt="Samia Albuquerque" class="responsavel-foto">
-                            <img src="assets/img/josias_logo.png" alt="Josias Santos" class="responsavel-foto">
+            <div class="cronograma-container storyteller">
+                <div class="slides-wrapper">
+                    <!-- Slide 1: Equipe -->
+                    <div class="slide active" data-step="1">
+                        <div class="cronograma-card">
+                            <div class="card-numero">1</div>
+                            <div class="card-etapa">Equipe</div>
+                            <div class="card-responsavel">
+                                <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                                <p><strong>David Neves</strong><br>Apresentar a equipe</p>
+                            </div>
                         </div>
-                        <p><strong>Samia & Josias</strong><br>Cálculos e resolução</p>
                     </div>
-                </div>
-                <!-- Proposta Pedagógica -->
-                <div class="cronograma-card">
-                    <div class="card-numero">7</div>
-                    <div class="card-etapa">Proposta Pedagógica</div>
-                    <div class="card-responsavel">
-                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
-                        <p><strong>David Neves</strong><br>Contexto educacional</p>
-                    </div>
-                </div>
-                <!-- Código Final -->
-                <div class="cronograma-card">
-                    <div class="card-numero">8</div>
-                    <div class="card-etapa">Código Final do Estudo</div>
-                    <div class="card-responsavel">
-                        <div class="dual-fotos">
-                            <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
-                            <img src="assets/img/yara_logo.png" alt="Yara da Silva" class="responsavel-foto">
+
+                    <!-- Slide 2: Tipo de Estudo -->
+                    <div class="slide" data-step="2">
+                        <div class="cronograma-card">
+                            <div class="card-numero">2</div>
+                            <div class="card-etapa">Tipo de Estudo de Caso</div>
+                            <div class="card-responsavel">
+                                <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                                <p><strong>David Neves</strong><br>Conceituação</p>
+                            </div>
                         </div>
-                        <p><strong>David & Yara</strong><br>Implementação Python</p>
+                    </div>
+
+                    <!-- Slide 3: Contextualização -->
+                    <div class="slide" data-step="3">
+                        <div class="cronograma-card">
+                            <div class="card-numero">3</div>
+                            <div class="card-etapa">Contextualização do Problema</div>
+                            <div class="card-responsavel">
+                                <div class="dual-fotos">
+                                    <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                                    <i data-lucide="user"></i>
+                                </div>
+                                <p><strong>David Neves & João Pedro</strong><br>Explicação conjunta</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4: Objetivo Geral -->
+                    <div class="slide" data-step="4">
+                        <div class="cronograma-card">
+                            <div class="card-numero">4</div>
+                            <div class="card-etapa">Objetivo Geral</div>
+                            <div class="card-responsavel">
+                                <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                                <p><strong>David Neves</strong><br>Apresentação</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 5: Objetivos Específicos -->
+                    <div class="slide" data-step="5">
+                        <div class="cronograma-card">
+                            <div class="card-numero">5</div>
+                            <div class="card-etapa">Objetivos Específicos</div>
+                            <div class="card-responsavel multi">
+                                <p><strong>Toda Equipe</strong><br>Detalhamento dos passos</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 6: Análise do Caso -->
+                    <div class="slide" data-step="6">
+                        <div class="cronograma-card">
+                            <div class="card-numero">6</div>
+                            <div class="card-etapa">Análise do Caso</div>
+                            <div class="card-responsavel">
+                                <div class="dual-fotos">
+                                    <img src="assets/img/samia_logo.png" alt="Samia Albuquerque" class="responsavel-foto">
+                                    <img src="assets/img/josias_logo.png" alt="Josias Santos" class="responsavel-foto">
+                                </div>
+                                <p><strong>Samia & Josias</strong><br>Cálculos e resolução</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 7: Proposta Pedagógica -->
+                    <div class="slide" data-step="7">
+                        <div class="cronograma-card">
+                            <div class="card-numero">7</div>
+                            <div class="card-etapa">Proposta Pedagógica</div>
+                            <div class="card-responsavel">
+                                <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                                <p><strong>David Neves</strong><br>Contexto educacional</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 8: Código Final -->
+                    <div class="slide" data-step="8">
+                        <div class="cronograma-card">
+                            <div class="card-numero">8</div>
+                            <div class="card-etapa">Código Final do Estudo</div>
+                            <div class="card-responsavel">
+                                <div class="dual-fotos">
+                                    <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                                    <img src="assets/img/yara_logo.png" alt="Yara da Silva" class="responsavel-foto">
+                                </div>
+                                <p><strong>David & Yara</strong><br>Implementação Python</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 9: Conclusão -->
+                    <div class="slide" data-step="9">
+                        <div class="cronograma-card">
+                            <div class="card-numero">9</div>
+                            <div class="card-etapa">Conclusão</div>
+                            <div class="card-responsavel">
+                                <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                                <p><strong>David Neves</strong><br>Fechamento</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 10: Sobre o Site -->
+                    <div class="slide" data-step="10">
+                        <div class="cronograma-card">
+                            <div class="card-numero">10</div>
+                            <div class="card-etapa">Sobre o Site</div>
+                            <div class="card-responsavel">
+                                <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
+                                <p><strong>David Neves</strong><br>Tecnologia</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Conclusão -->
-                <div class="cronograma-card">
-                    <div class="card-numero">9</div>
-                    <div class="card-etapa">Conclusão</div>
-                    <div class="card-responsavel">
-                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
-                        <p><strong>David Neves</strong><br>Fechamento</p>
-                    </div>
-                </div>
-                <!-- Sobre o Site -->
-                <div class="cronograma-card">
-                    <div class="card-numero">10</div>
-                    <div class="card-etapa">Sobre o Site</div>
-                    <div class="card-responsavel">
-                        <img src="assets/img/neves_logo.png" alt="David Neves" class="responsavel-foto">
-                        <p><strong>David Neves</strong><br>Tecnologia</p>
-                    </div>
+
+                <div class="story-controls">
+                    <button id="prevCronograma" class="btn-story back"><i data-lucide="chevron-left"></i> Voltar</button>
+                    <div class="progress-dots"></div>
+                    <button id="nextCronograma" class="btn-story next">Continuar <i data-lucide="chevron-right"></i></button>
                 </div>
             </div>
         </div>
