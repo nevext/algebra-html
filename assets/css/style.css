@@ -2261,11 +2261,14 @@ html {
 .svg-zoom-viewport {
     width: 100%;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
     position: relative;
     cursor: grab;
     user-select: none;
     background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .svg-zoom-viewport.panning {
@@ -2273,31 +2276,23 @@ html {
 }
 
 .svg-zoom-viewport::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    display: none;
 }
 
 .svg-zoom-viewport::-webkit-scrollbar-track {
-    background: #e5e7eb;
-    border-radius: 4px;
+    background: transparent;
 }
 
 .svg-zoom-viewport::-webkit-scrollbar-thumb {
-    background: var(--accent-blue);
-    border-radius: 6px;
-    border: 2px solid #e5e7eb;
-}
-
-.svg-zoom-viewport::-webkit-scrollbar-thumb:hover {
-    background: #0052cc;
+    background: transparent;
 }
 
 .svg-zoom-content {
     display: block;
-    width: 100%;
+    max-width: 100%;
     height: auto;
     transition: transform 0.1s ease-out;
-    transform-origin: 0 0;
+    transform-origin: center center;
 }
 
 .svg-zoom-controls {

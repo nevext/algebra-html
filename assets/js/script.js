@@ -538,8 +538,8 @@ class SVGZoomController {
             isDragging: false,
             dragStartX: 0,
             dragStartY: 0,
-            scrollStartX: 0,
-            scrollStartY: 0
+            lastPanX: 0,
+            lastPanY: 0
         };
         
         this.init();
@@ -551,40 +551,40 @@ class SVGZoomController {
         
         // Pan with mouse drag
         this.viewport.addEventListener('mousedown', (e) => this.handleMouseDown(e));
-        this.viewport.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-        this.viewport.addEventListener('mouseup', () => this.handleMouseUp());
+        document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        document.addEventListener('mouseup', () => this.handleMouseUp());
         this.viewport.addEventListener('mouseleave', () => this.handleMouseUp());
         
         // Touch support
         this.viewport.addEventListener('touchstart', (e) => this.handleTouchStart(e));
-        this.viewport.addEventListener('touchmove', (e) => this.handleTouchMove(e));
-        this.viewport.addEventListener('touchend', () => this.handleTouchEnd());
+        document.addEventListener('touchmove', (e) => this.handleTouchMove(e));
+        document.addEventListener('touchend', () => this.handleTouchEnd());
     }
     
     handleWheel(e) {
         e.preventDefault();
         const delta = e.deltaY > 0 ? -0.1 : 0.1;
-        this.zoom(delta, e.clientX, e.clientY);
+        this.zoom(delta);
     }
     
     handleMouseDown(e) {
-        if (e.button !== 0 || e.target !== this.viewport) return;
+        if (e.button !== 0) return;
+        if (e.target !== this.viewport && e.target !== this.content) return;
+        
         this.state.isDragging = true;
-        this.state.dragStartX = e.clientX;
-        this.state.dragStartY = e.clientY;
-        this.state.scrollStartX = this.viewport.scrollLeft;
-        this.state.scrollStartY = this.viewport.scrollTop;
+        this.state.dragStartX = e.clientX - this.state.panX;
+        this.state.dragStartY = e.clientY - this.state.panY;
         this.viewport.classList.add('panning');
+        e.preventDefault();
     }
     
     handleMouseMove(e) {
         if (!this.state.isDragging) return;
         
-        const dx = e.clientX - this.state.dragStartX;
-        const dy = e.clientY - this.state.dragStartY;
+        this.state.panX = e.clientX - this.state.dragStartX;
+        this.state.panY = e.clientY - this.state.dragStartY;
         
-        this.viewport.scrollLeft = this.state.scrollStartX - dx;
-        this.viewport.scrollTop = this.state.scrollStartY - dy;
+        this.updateTransform();
     }
     
     handleMouseUp() {
@@ -595,66 +595,62 @@ class SVGZoomController {
     handleTouchStart(e) {
         if (e.touches.length !== 1) return;
         this.state.isDragging = true;
-        this.state.dragStartX = e.touches[0].clientX;
-        this.state.dragStartY = e.touches[0].clientY;
-        this.state.scrollStartX = this.viewport.scrollLeft;
-        this.state.scrollStartY = this.viewport.scrollTop;
+        this.state.dragStartX = e.touches[0].clientX - this.state.panX;
+        this.state.dragStartY = e.touches[0].clientY - this.state.panY;
     }
     
     handleTouchMove(e) {
         if (!this.state.isDragging || e.touches.length !== 1) return;
         
-        const dx = e.touches[0].clientX - this.state.dragStartX;
-        const dy = e.touches[0].clientY - this.state.dragStartY;
+        this.state.panX = e.touches[0].clientX - this.state.dragStartX;
+        this.state.panY = e.touches[0].clientY - this.state.dragStartY;
         
-        this.viewport.scrollLeft = this.state.scrollStartX - dx;
-        this.viewport.scrollTop = this.state.scrollStartY - dy;
+        this.updateTransform();
+        e.preventDefault();
     }
     
     handleTouchEnd() {
         this.state.isDragging = false;
     }
     
-    zoom(delta, clientX, clientY) {
+    zoom(delta) {
+        const oldZoom = this.state.zoom;
         const newZoom = Math.max(0.5, Math.min(3, this.state.zoom + delta));
         
         if (newZoom === this.state.zoom) return;
         
-        // Get viewport and content dimensions
-        const rect = this.viewport.getBoundingClientRect();
-        const contentRect = this.content.getBoundingClientRect();
+        // Calcular ponto central do viewport
+        const viewport = this.viewport.getBoundingClientRect();
+        const centerX = viewport.width / 2;
+        const centerY = viewport.height / 2;
         
-        // Calculate mouse position relative to viewport
-        const offsetX = clientX - rect.left + this.viewport.scrollLeft;
-        const offsetY = clientY - rect.top + this.viewport.scrollTop;
+        // Ajustar pan para manter centro no mesmo lugar durante zoom
+        const zoomRatio = newZoom / oldZoom;
+        this.state.panX = centerX - (centerX - this.state.panX) * zoomRatio;
+        this.state.panY = centerY - (centerY - this.state.panY) * zoomRatio;
         
-        // Calculate position relative to content
-        const contentX = offsetX / (this.content.clientWidth * this.state.zoom);
-        const contentY = offsetY / (this.content.clientHeight * this.state.zoom);
-        
-        // Update zoom
         this.state.zoom = newZoom;
-        this.content.style.transform = `scale(${newZoom})`;
+        this.updateTransform();
         this.updateZoomDisplay();
         this.updateButtonStates();
+    }
+    
+    updateTransform() {
+        // Limitar pan para não sair muito da imagem
+        const maxPanX = (this.content.offsetWidth * this.state.zoom - this.viewport.offsetWidth) / 2;
+        const maxPanY = (this.content.offsetHeight * this.state.zoom - this.viewport.offsetHeight) / 2;
         
-        // Adjust scroll to keep mouse position stable
-        requestAnimationFrame(() => {
-            const newContentWidth = this.content.clientWidth * newZoom;
-            const newContentHeight = this.content.clientHeight * newZoom;
-            
-            this.viewport.scrollLeft = (contentX * newContentWidth) - (offsetX * newZoom / this.state.zoom);
-            this.viewport.scrollTop = (contentY * newContentHeight) - (offsetY * newZoom / this.state.zoom);
-        });
+        this.state.panX = Math.max(-maxPanX, Math.min(maxPanX, this.state.panX));
+        this.state.panY = Math.max(-maxPanY, Math.min(maxPanY, this.state.panY));
+        
+        this.content.style.transform = `translate(${this.state.panX}px, ${this.state.panY}px) scale(${this.state.zoom})`;
     }
     
     reset() {
         this.state.zoom = 1;
         this.state.panX = 0;
         this.state.panY = 0;
-        this.content.style.transform = 'scale(1)';
-        this.viewport.scrollLeft = 0;
-        this.viewport.scrollTop = 0;
+        this.content.style.transform = 'translate(0, 0) scale(1)';
         this.updateZoomDisplay();
         this.updateButtonStates();
     }
@@ -686,11 +682,10 @@ function initializeSVGZoom() {
 
 // Global zoom functions for button clicks
 function zoomSvg(button, delta) {
-    const controls = button.closest('.svg-zoom-controls');
     const container = button.closest('.svg-zoom-container');
     
     if (container._zoomController) {
-        container._zoomController.zoom(delta, Event.offsetX || innerWidth / 2, Event.offsetY || innerHeight / 2);
+        container._zoomController.zoom(delta);
     }
 }
 
