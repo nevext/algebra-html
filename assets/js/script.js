@@ -181,6 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
             currentStep = 1;
             initDots(currentStory);
             updateSlides();
+            // Initialize SVG zoom if this story has SVG containers
+            if (storyId === 'analiseManual') {
+                setTimeout(() => initializeSVGZoom(), 50);
+            }
         }
     }
 
@@ -422,6 +426,8 @@ document.addEventListener('DOMContentLoaded', () => {
             analiseModal.querySelectorAll('.contexto-state').forEach(s => s.classList.add('hidden'));
             const selectMenu = document.getElementById('analiseSelect');
             if (selectMenu) selectMenu.classList.remove('hidden');
+            // Initialize SVG zoom controllers
+            setTimeout(() => initializeSVGZoom(), 100);
         });
         closeAnaliseModal.addEventListener('click', () => {
             analiseModal.classList.remove('active');
@@ -517,41 +523,180 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSimpleModal(btnCodigo, codeModal, closeCodeModal, 'btnCodigo');
 });
 
-/* SVG Zoom Functions */
-let svgZoomLevels = new Map();
+/* SVG Zoom Functions with Pan Support */
+let svgZoomStates = new Map();
 
+class SVGZoomController {
+    constructor(container) {
+        this.container = container;
+        this.viewport = container.querySelector('.svg-zoom-viewport');
+        this.content = container.querySelector('.svg-zoom-content');
+        this.state = {
+            zoom: 1,
+            panX: 0,
+            panY: 0,
+            isDragging: false,
+            dragStartX: 0,
+            dragStartY: 0,
+            scrollStartX: 0,
+            scrollStartY: 0
+        };
+        
+        this.init();
+    }
+    
+    init() {
+        // Mouse wheel zoom
+        this.viewport.addEventListener('wheel', (e) => this.handleWheel(e));
+        
+        // Pan with mouse drag
+        this.viewport.addEventListener('mousedown', (e) => this.handleMouseDown(e));
+        this.viewport.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        this.viewport.addEventListener('mouseup', () => this.handleMouseUp());
+        this.viewport.addEventListener('mouseleave', () => this.handleMouseUp());
+        
+        // Touch support
+        this.viewport.addEventListener('touchstart', (e) => this.handleTouchStart(e));
+        this.viewport.addEventListener('touchmove', (e) => this.handleTouchMove(e));
+        this.viewport.addEventListener('touchend', () => this.handleTouchEnd());
+    }
+    
+    handleWheel(e) {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.1 : 0.1;
+        this.zoom(delta, e.clientX, e.clientY);
+    }
+    
+    handleMouseDown(e) {
+        if (e.button !== 0 || e.target !== this.viewport) return;
+        this.state.isDragging = true;
+        this.state.dragStartX = e.clientX;
+        this.state.dragStartY = e.clientY;
+        this.state.scrollStartX = this.viewport.scrollLeft;
+        this.state.scrollStartY = this.viewport.scrollTop;
+        this.viewport.classList.add('panning');
+    }
+    
+    handleMouseMove(e) {
+        if (!this.state.isDragging) return;
+        
+        const dx = e.clientX - this.state.dragStartX;
+        const dy = e.clientY - this.state.dragStartY;
+        
+        this.viewport.scrollLeft = this.state.scrollStartX - dx;
+        this.viewport.scrollTop = this.state.scrollStartY - dy;
+    }
+    
+    handleMouseUp() {
+        this.state.isDragging = false;
+        this.viewport.classList.remove('panning');
+    }
+    
+    handleTouchStart(e) {
+        if (e.touches.length !== 1) return;
+        this.state.isDragging = true;
+        this.state.dragStartX = e.touches[0].clientX;
+        this.state.dragStartY = e.touches[0].clientY;
+        this.state.scrollStartX = this.viewport.scrollLeft;
+        this.state.scrollStartY = this.viewport.scrollTop;
+    }
+    
+    handleTouchMove(e) {
+        if (!this.state.isDragging || e.touches.length !== 1) return;
+        
+        const dx = e.touches[0].clientX - this.state.dragStartX;
+        const dy = e.touches[0].clientY - this.state.dragStartY;
+        
+        this.viewport.scrollLeft = this.state.scrollStartX - dx;
+        this.viewport.scrollTop = this.state.scrollStartY - dy;
+    }
+    
+    handleTouchEnd() {
+        this.state.isDragging = false;
+    }
+    
+    zoom(delta, clientX, clientY) {
+        const newZoom = Math.max(0.5, Math.min(3, this.state.zoom + delta));
+        
+        if (newZoom === this.state.zoom) return;
+        
+        // Get viewport and content dimensions
+        const rect = this.viewport.getBoundingClientRect();
+        const contentRect = this.content.getBoundingClientRect();
+        
+        // Calculate mouse position relative to viewport
+        const offsetX = clientX - rect.left + this.viewport.scrollLeft;
+        const offsetY = clientY - rect.top + this.viewport.scrollTop;
+        
+        // Calculate position relative to content
+        const contentX = offsetX / (this.content.clientWidth * this.state.zoom);
+        const contentY = offsetY / (this.content.clientHeight * this.state.zoom);
+        
+        // Update zoom
+        this.state.zoom = newZoom;
+        this.content.style.transform = `scale(${newZoom})`;
+        this.updateZoomDisplay();
+        this.updateButtonStates();
+        
+        // Adjust scroll to keep mouse position stable
+        requestAnimationFrame(() => {
+            const newContentWidth = this.content.clientWidth * newZoom;
+            const newContentHeight = this.content.clientHeight * newZoom;
+            
+            this.viewport.scrollLeft = (contentX * newContentWidth) - (offsetX * newZoom / this.state.zoom);
+            this.viewport.scrollTop = (contentY * newContentHeight) - (offsetY * newZoom / this.state.zoom);
+        });
+    }
+    
+    reset() {
+        this.state.zoom = 1;
+        this.state.panX = 0;
+        this.state.panY = 0;
+        this.content.style.transform = 'scale(1)';
+        this.viewport.scrollLeft = 0;
+        this.viewport.scrollTop = 0;
+        this.updateZoomDisplay();
+        this.updateButtonStates();
+    }
+    
+    updateZoomDisplay() {
+        const percentDisplay = this.container.querySelector('.zoom-percent');
+        if (percentDisplay) {
+            percentDisplay.textContent = Math.round(this.state.zoom * 100);
+        }
+    }
+    
+    updateButtonStates() {
+        const buttons = this.container.querySelectorAll('.svg-zoom-btn');
+        if (buttons.length >= 3) {
+            buttons[0].disabled = this.state.zoom <= 0.5;
+            buttons[2].disabled = this.state.zoom >= 3;
+        }
+    }
+}
+
+// Initialize zoom controllers when modal is opened
+function initializeSVGZoom() {
+    document.querySelectorAll('.svg-zoom-container').forEach(container => {
+        if (!container._zoomController) {
+            container._zoomController = new SVGZoomController(container);
+        }
+    });
+}
+
+// Global zoom functions for button clicks
 function zoomSvg(button, delta) {
     const controls = button.closest('.svg-zoom-controls');
     const container = button.closest('.svg-zoom-container');
-    const viewport = container.querySelector('.svg-zoom-viewport');
-    const content = container.querySelector('.svg-zoom-content');
-    const percentDisplay = controls.querySelector('.zoom-percent');
     
-    let currentZoom = svgZoomLevels.get(container) || 1;
-    let newZoom = Math.max(0.5, Math.min(3, currentZoom + delta));
-    
-    content.style.transform = `scale(${newZoom})`;
-    svgZoomLevels.set(container, newZoom);
-    percentDisplay.textContent = Math.round(newZoom * 100);
-    
-    // Update button states
-    const buttons = controls.querySelectorAll('.svg-zoom-btn');
-    buttons[0].disabled = newZoom <= 0.5;
-    buttons[2].disabled = newZoom >= 3;
+    if (container._zoomController) {
+        container._zoomController.zoom(delta, Event.offsetX || innerWidth / 2, Event.offsetY || innerHeight / 2);
+    }
 }
 
 function resetZoom(button) {
-    const controls = button.closest('.svg-zoom-controls');
     const container = button.closest('.svg-zoom-container');
-    const content = container.querySelector('.svg-zoom-content');
-    const percentDisplay = controls.querySelector('.zoom-percent');
-    
-    content.style.transform = 'scale(1)';
-    svgZoomLevels.set(container, 1);
-    percentDisplay.textContent = '100';
-    
-    // Update button states
-    const buttons = controls.querySelectorAll('.svg-zoom-btn');
-    buttons[0].disabled = false;
-    buttons[2].disabled = false;
+    if (container._zoomController) {
+        container._zoomController.reset();
+    }
 }

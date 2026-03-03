@@ -2263,11 +2263,18 @@ html {
     height: 100%;
     overflow: auto;
     position: relative;
+    cursor: grab;
+    user-select: none;
+    background: white;
+}
+
+.svg-zoom-viewport.panning {
+    cursor: grabbing;
 }
 
 .svg-zoom-viewport::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
 }
 
 .svg-zoom-viewport::-webkit-scrollbar-track {
@@ -2277,7 +2284,8 @@ html {
 
 .svg-zoom-viewport::-webkit-scrollbar-thumb {
     background: var(--accent-blue);
-    border-radius: 4px;
+    border-radius: 6px;
+    border: 2px solid #e5e7eb;
 }
 
 .svg-zoom-viewport::-webkit-scrollbar-thumb:hover {
@@ -2285,28 +2293,29 @@ html {
 }
 
 .svg-zoom-content {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.1s ease-out;
     transform-origin: 0 0;
-    transition: transform 0.2s ease;
-    display: inline-block;
-    min-width: 100%;
-    min-height: 100%;
 }
 
 .svg-zoom-controls {
     position: absolute;
-    bottom: 12px;
-    right: 12px;
+    bottom: 16px;
+    right: 16px;
     display: flex;
     gap: 8px;
     background: white;
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid var(--glass-border);
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid var(--glass-border);
     z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.1);
 }
 
 .svg-zoom-btn {
-    padding: 6px 10px;
+    padding: 8px 12px;
     background: var(--accent-blue);
     color: white;
     border: none;
@@ -2315,45 +2324,70 @@ html {
     font-size: 14px;
     font-weight: 600;
     transition: all 0.2s ease;
+    min-width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.svg-zoom-btn:hover {
+.svg-zoom-btn:hover:not(:disabled) {
     background: #0052cc;
-    transform: scale(1.05);
+    transform: scale(1.08);
+    box-shadow: 0 4px 8px rgba(0, 52, 204, 0.3);
+}
+
+.svg-zoom-btn:active:not(:disabled) {
+    transform: scale(0.96);
 }
 
 .svg-zoom-btn:disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
 }
 
 .svg-zoom-level {
-    padding: 6px 12px;
+    padding: 8px 16px;
     background: var(--accent-blue-soft);
     color: var(--accent-blue);
     border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    min-width: 60px;
+    text-align: center;
+    justify-content: center;
+}
+
+.svg-pan-hint {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 11px;
+    color: #999;
+    pointer-events: none;
+    opacity: 0.6;
 }
 
 .svg-pages-container {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 32px;
 }
 
 .svg-page {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .svg-page-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent-blue);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 /* Print Styles */

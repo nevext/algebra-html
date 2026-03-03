@@ -603,36 +603,34 @@
                         <!-- Página 1 -->
                         <div class="svg-page">
                             <div class="svg-page-label">Cálculo à Mão - Página 1</div>
-                            <div class="svg-zoom-container">
-                                <div class="svg-zoom-viewport">
-                                    <object class="svg-zoom-content" data="assets/file/pagina1.svg" type="image/svg+xml">
-                        <!-- Página 1 SVG will appear here -->
-                                    </object>
+                            <div class="svg-zoom-container" data-page="1">
+                                <div class="svg-zoom-viewport" id="viewport-1">
+                                    <img class="svg-zoom-content" src="assets/file/pagina1.svg" alt="Página 1 - Cálculos">
                                 </div>
                                 <div class="svg-zoom-controls" onclick="event.stopPropagation();">
-                                    <button class="svg-zoom-btn" onclick="zoomSvg(this, -0.2)">−</button>
+                                    <button class="svg-zoom-btn" title="Diminuir zoom" onclick="zoomSvg(this, -0.2)">−</button>
                                     <span class="svg-zoom-level"><span class="zoom-percent">100</span>%</span>
-                                    <button class="svg-zoom-btn" onclick="zoomSvg(this, 0.2)">+</button>
-                                    <button class="svg-zoom-btn" onclick="resetZoom(this)">Resetar</button>
+                                    <button class="svg-zoom-btn" title="Aumentar zoom" onclick="zoomSvg(this, 0.2)">+</button>
+                                    <button class="svg-zoom-btn" title="Resetar zoom e posição" onclick="resetZoom(this)">⟲ Resetar</button>
                                 </div>
+                                <div class="svg-pan-hint">Arraste para movimentar a imagem</div>
                             </div>
                         </div>
 
                         <!-- Página 2 -->
                         <div class="svg-page">
                             <div class="svg-page-label">Cálculo à Mão - Página 2</div>
-                            <div class="svg-zoom-container">
-                                <div class="svg-zoom-viewport">
-                                    <object class="svg-zoom-content" data="assets/file/pagina2.svg" type="image/svg+xml">
-                        <!-- Página 2 SVG will appear here -->
-                                    </object>
+                            <div class="svg-zoom-container" data-page="2">
+                                <div class="svg-zoom-viewport" id="viewport-2">
+                                    <img class="svg-zoom-content" src="assets/file/pagina2.svg" alt="Página 2 - Cálculos">
                                 </div>
                                 <div class="svg-zoom-controls" onclick="event.stopPropagation();">
-                                    <button class="svg-zoom-btn" onclick="zoomSvg(this, -0.2)">−</button>
+                                    <button class="svg-zoom-btn" title="Diminuir zoom" onclick="zoomSvg(this, -0.2)">−</button>
                                     <span class="svg-zoom-level"><span class="zoom-percent">100</span>%</span>
-                                    <button class="svg-zoom-btn" onclick="zoomSvg(this, 0.2)">+</button>
-                                    <button class="svg-zoom-btn" onclick="resetZoom(this)">Resetar</button>
+                                    <button class="svg-zoom-btn" title="Aumentar zoom" onclick="zoomSvg(this, 0.2)">+</button>
+                                    <button class="svg-zoom-btn" title="Resetar zoom e posição" onclick="resetZoom(this)">⟲ Resetar</button>
                                 </div>
+                                <div class="svg-pan-hint">Arraste para movimentar a imagem</div>
                             </div>
                         </div>
                     </div>
